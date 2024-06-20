@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+</head>
+<body>
+<div class="container">
+    <h2>Admin Dashboard</h2>
+    <p th:text="'Hola, ' + ${user.nombreEmpleado} + '!'"></p>
+    <a th:href="@{/clientes}" class="btn btn-primary">Gestionar Clientes</a>
+    <a th:href="@{/empleados}" class="btn btn-primary">Gestionar Empleados</a>
+    <a th:href="@{/peliculas}" class="btn btn-primary">Gestionar Películas</a>
+    <a th:href="@{/logout}" class="btn btn-secondary">Logout</a>
+</div>
+</body>
+</html>
