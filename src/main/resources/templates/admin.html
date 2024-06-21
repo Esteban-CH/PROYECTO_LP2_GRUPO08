@@ -1,17 +1,45 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard</title>
-    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 250px;
+            background-color: #f8f9fa;
+            padding-top: 20px;
+        }
+        .content {
+            margin-left: 250px;
+            padding: 20px;
+        }
+    </style>
 </head>
 <body>
-<div class="container">
-    <h2>Admin Dashboard</h2>
-    <p th:text="'Hola, ' + ${user.nombreEmpleado} + '!'"></p>
-    <a th:href="@{/clientes}" class="btn btn-primary">Gestionar Clientes</a>
-    <a th:href="@{/listar_empleado}" class="btn btn-primary">Gestionar Empleados</a>
-    <a th:href="@{/peliculas}" class="btn btn-primary">Gestionar Películas</a>
-    <a th:href="@{/logout}" class="btn btn-secondary">Logout</a>
+<div class="container-fluid">
+    <div class="row">
+        <div class="sidebar col-auto">
+            <div class="list-group">
+                <a th:href="@{/clientes}" class="list-group-item list-group-item-action">Gestionar Clientes</a>
+                <a th:href="@{/listar_empleado}" class="list-group-item list-group-item-action">Gestionar Empleados</a>
+                <a th:href="@{/peliculas}" class="list-group-item list-group-item-action">Gestionar Películas</a>
+                <a th:href="@{/logout}" class="list-group-item list-group-item-action text-danger">Logout</a>
+            </div>
+        </div>
+        <div class="content col">
+            <h2>Admin Dashboard</h2>
+            <p th:text="'Hola, ' + ${user.nombreEmpleado} + '!'"></p>
+        </div>
+    </div>
 </div>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
