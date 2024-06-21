@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Listado de Empleados</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container mt-4">
+    <h2 class="mb-4">Listado de Empleados</h2>
+    <a th:href="@{/registrar_empleado}" class="btn btn-primary mb-4">Registrar Nuevo Empleado</a>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead class="thead-dark">
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Apellido</th>
+                    <th>Email</th>
+                    <th>Teléfono</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="empleado : ${empleados}">
+                    <td th:text="${empleado.empleadoId}"></td>
+                    <td th:text="${empleado.nombreEmpleado}"></td>
+                    <td th:text="${empleado.apellidoEmpleado}"></td>
+                    <td th:text="${empleado.emailEmpleado}"></td>
+                    <td th:text="${empleado.telefonoEmpleado}"></td>
+                    <td>
+                        <a th:href="@{/editar_empleado/{id}(id=${empleado.empleadoId})}" class="btn btn-warning btn-sm">Editar</a>
+                        <a th:href="@{/eliminar_empleado/{id}(id=${empleado.empleadoId})}" class="btn btn-danger btn-sm" onclick="return confirm('¿Está seguro de que desea eliminar este empleado?');">Eliminar</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
