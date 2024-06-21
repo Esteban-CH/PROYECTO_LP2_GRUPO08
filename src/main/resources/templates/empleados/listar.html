@@ -31,6 +31,7 @@
                     <td th:text="${empleado.telefonoEmpleado}"></td>
                     <td>
                         <a th:href="@{/editar_empleado/{id}(id=${empleado.empleadoId})}" class="btn btn-warning btn-sm">Editar</a>
+                        <a th:href="@{/detalle_empleado/{id}(id=${empleado.empleadoId})}" class="btn btn-warning btn-sm">Ver</a>
                         <a th:href="@{/eliminar_empleado/{id}(id=${empleado.empleadoId})}" class="btn btn-danger btn-sm" onclick="return confirm('¿Está seguro de que desea eliminar este empleado?');">Eliminar</a>
                     </td>
                 </tr>
