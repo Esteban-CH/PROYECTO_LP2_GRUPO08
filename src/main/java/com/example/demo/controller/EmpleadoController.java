@@ -21,13 +21,13 @@ public class EmpleadoController {
 	
 	@GetMapping("/listar_empleado")
 	public String listarEmpleados(Model model) {
-		model.addAttribute("empleados", repository.findAll());
+		model.addAttribute("empleado", repository.findAll());
 		return "empleados/listar";
 	}
 	
 	@GetMapping("/registrar_empleado")
 	public String mostrarVistaNuevoEmpleado(Model model) {
-		model.addAttribute("empleados", new EmpleadoEntity());
+		model.addAttribute("empleado", new EmpleadoEntity());
 		return("empleados/registrar");
 	}
 	

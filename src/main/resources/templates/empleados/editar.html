@@ -5,37 +5,48 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Editar Empleado</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/sidebar.css"> <!-- Agregar el CSS específico del sidebar -->
 </head>
 <body>
-<div class="container mt-4">
-    <h2 class="mb-4">Editar Empleado</h2>
-    <form th:action="@{/editar_empleado/{id}(id=${empleado.empleadoId})}" th:object="${empleado}" method="post">
-        <div class="form-group">
-            <label for="nombreEmpleado">Nombre</label>
-            <input type="text" class="form-control" id="nombreEmpleado" th:field="*{nombreEmpleado}" required>
+<div class="container-fluid">
+    <div class="row">
+        <div th:replace="fragmentos/sidebar :: sidebar"></div>
+        <div class="content col">
+            <div class="container mt-4">
+                <h2>Editar Empleado</h2>
+            </div>
+            <form th:action="@{/editar_empleado/{id}(id=${empleado.empleadoId})}" th:object="${empleado}" method="post">
+                <div class="form-group">
+                    <label for="nombreEmpleado">Nombre</label>
+                    <input type="text" class="form-control" id="nombreEmpleado" th:field="*{nombreEmpleado}" required>
+                </div>
+                <div class="form-group">
+                    <label for="apellidoEmpleado">Apellido</label>
+                    <input type="text" class="form-control" id="apellidoEmpleado" th:field="*{apellidoEmpleado}" required>
+                </div>
+                <div class="form-group">
+                    <label for="emailEmpleado">Email</label>
+                    <input type="email" class="form-control" id="emailEmpleado" th:field="*{emailEmpleado}" required>
+                </div>
+                <div class="form-group">
+                    <label for="telefonoEmpleado">Teléfono</label>
+                    <input type="text" class="form-control" id="telefonoEmpleado" th:field="*{telefonoEmpleado}" required>
+                </div>
+                <div class="form-group">
+                    <label for="passwordEmpleado">Password</label>
+                    <input type="text" class="form-control" id="passwordEmpleado" th:field="*{passwordEmpleado}">
+                </div>
+                <button type="submit" class="btn btn-primary">Actualizar</button>
+                <a th:href="@{/listar_empleado}" class="btn btn-secondary">Cancelar</a>
+            </form>
         </div>
-        <div class="form-group">
-            <label for="apellidoEmpleado">Apellido</label>
-            <input type="text" class="form-control" id="apellidoEmpleado" th:field="*{apellidoEmpleado}" required>
-        </div>
-        <div class="form-group">
-            <label for="emailEmpleado">Email</label>
-            <input type="email" class="form-control" id="emailEmpleado" th:field="*{emailEmpleado}" required>
-        </div>
-        <div class="form-group">
-            <label for="telefonoEmpleado">Teléfono</label>
-            <input type="text" class="form-control" id="telefonoEmpleado" th:field="*{telefonoEmpleado}" required>
-        </div>
-        <div class="form-group">
-            <label for="passwordEmpleado">Password</label>
-            <input type="text" class="form-control" id="passwordEmpleado" th:field="*{passwordEmpleado}">
-        </div>
-        <button type="submit" class="btn btn-primary">Actualizar</button>
-        <a th:href="@{/listar_empleado}" class="btn btn-secondary">Cancelar</a>
-    </form>
+    </div>
 </div>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://unpkg.com/feather-icons"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css"></script>
 </body>
 </html>
+

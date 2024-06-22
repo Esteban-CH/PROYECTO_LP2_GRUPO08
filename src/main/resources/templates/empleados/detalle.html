@@ -5,23 +5,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Detalle del Empleado</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/sidebar.css"> <!-- Agregar el CSS específico del sidebar -->
 </head>
 <body>
-<div class="container mt-4">
-    <h2 class="mb-4">Detalle del Empleado</h2>
-    <div class="card">
-        <div class="card-body">
-            <h5 class="card-title" th:text="${empleado.nombreEmpleado} + ' ' + ${empleado.apellidoEmpleado}"></h5>
-            <p class="card-text"><strong>Email:</strong> <span th:text="${empleado.emailEmpleado}"></span></p>
-            <p class="card-text"><strong>Teléfono:</strong> <span th:text="${empleado.telefonoEmpleado}"></span></p>
-            <p class="card-text"><strong>Fecha de Creación:</strong> <span th:text="${#dates.format(empleado.fchaCreacionEmpleado, 'dd/MM/yyyy HH:mm:ss')}"></span></p>
-            <p class="card-text"><strong>Última Actualización:</strong> <span th:text="${#dates.format(empleado.fchaActualizacionEmpleado, 'dd/MM/yyyy HH:mm:ss')}"></span></p>
-            <a th:href="@{/listar_empleado}" class="btn btn-primary">Volver al Listado</a>
+<div class="container-fluid">
+    <div class="row">
+        <div th:replace="fragmentos/sidebar :: sidebar"></div>
+        <div class="content col">
+            <div class="container mt-4">
+                <h2>Detalle del Empleado</h2>
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title" th:text="${empleado.nombreEmpleado} + ' ' + ${empleado.apellidoEmpleado}"></h5>
+                    <p class="card-text"><strong>Email:</strong> <span th:text="${empleado.emailEmpleado}"></span></p>
+                    <p class="card-text"><strong>Teléfono:</strong> <span th:text="${empleado.telefonoEmpleado}"></span></p>
+                    <p class="card-text"><strong>Fecha de Creación:</strong> <span th:text="${#dates.format(empleado.fchaCreacionEmpleado, 'dd/MM/yyyy HH:mm:ss')}"></span></p>
+                    <p class="card-text"><strong>Última Actualización:</strong> <span th:text="${#dates.format(empleado.fchaActualizacionEmpleado, 'dd/MM/yyyy HH:mm:ss')}"></span></p>
+                    <a th:href="@{/listar_empleado}" class="btn btn-primary">Volver al Listado</a>
+                </div>
+            </div>
         </div>
     </div>
 </div>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://unpkg.com/feather-icons"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css"></script>
 </body>
 </html>
