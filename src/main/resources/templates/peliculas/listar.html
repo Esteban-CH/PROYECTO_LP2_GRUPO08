@@ -6,6 +6,7 @@
     <title>Listado de Películas</title>
     <!-- Bootstrap CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/sidebar.css">
     <style>
         .movie-image {
             max-width: 100px;
@@ -14,44 +15,56 @@
     </style>
 </head>
 <body>
-    <div class="container mt-4">
-        <h2>Listado de Películas</h2>
-        <a th:href="@{/peliculas/nueva}" class="btn btn-primary mb-3">Agregar Nueva Película</a>
-        <div class="table-responsive">
-            <table class="table table-striped">
-                <thead class="thead-dark">
-                    <tr>
-                        <th>ID</th>
-                        <th>Título</th>
-                        <th>Descripción</th>
-                        <th>Director</th>
-                        <th>Fecha de Estreno</th>
-                        <th>Duración (min)</th>
-                        <th>Imagen</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr th:each="pelicula : ${peliculas}">
-                        <td th:text="${pelicula.peliculaId}"></td>
-                        <td th:text="${pelicula.tituloPelicula}"></td>
-                        <td th:text="${pelicula.descripcionPelicula}"></td>
-                        <td th:text="${pelicula.directorPelicula}"></td>
-                        <td th:text="${#dates.format(pelicula.fechaEstrenoPelicula, 'yyyy-MM-dd')}"></td>
-                        <td th:text="${pelicula.duracionPelicula}"></td>
-                        <td><img th:src="@{${pelicula.imagenPelicula}}" alt="Imagen de la película" class="movie-image"></td>
-                        <td>
-                            <a th:href="@{/peliculas/editar/{id}(id=${pelicula.peliculaId})}" class="btn btn-warning">Editar</a>
-                            <a th:href="@{/peliculas/eliminar/{id}(id=${pelicula.peliculaId})}" class="btn btn-danger">Eliminar</a>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+<div class="container-fluid">
+    <div class="row">
+        <div th:replace="fragmentos/sidebar :: sidebar"></div>
+        <div class="content col">
+            <div class="container mt-4">
+                <h2>Listado de Películas</h2>
+                <a th:href="@{/registrar_pelicula}" class="btn btn-primary mb-3">Agregar Nueva Película</a>
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th>ID</th>
+                                <th>Título</th>
+                                <th>Descripción</th>
+                                <th>Director</th>
+                                <th>Fecha de Estreno</th>
+                                <th>Duración (min)</th>
+                                <th>Imagen</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="pelicula : ${peliculas}">
+                                <td th:text="${pelicula.peliculaId}"></td>
+                                <td th:text="${pelicula.tituloPelicula}"></td>
+                                <td th:text="${pelicula.descripcionPelicula}"></td>
+                                <td th:text="${pelicula.directorPelicula}"></td>
+                                <td th:text="${#dates.format(pelicula.fechaEstrenoPelicula, 'yyyy-MM-dd')}"></td>
+                                <td th:text="${pelicula.duracionPelicula}"></td>
+                                <td><img th:src="@{${pelicula.imagenPelicula}}" alt="Imagen de la película" class="movie-image" width="10px" height="10px"></td>
+                                <td>
+                                    <a th:href="@{/editar_pelicula/{id}(id=${pelicula.peliculaId})}" class="btn btn-warning">Editar</a>
+                                    <a th:href="@{/eliminar_pelicula/{id}(id=${pelicula.peliculaId})}" class="btn btn-danger">Eliminar</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
-    <!-- Bootstrap JS y dependencias opcionales -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</div>
+<!-- Bootstrap JS y dependencias opcionales -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://unpkg.com/feather-icons"></script>
+<script>
+    feather.replace()
+</script>
 </body>
 </html>
+

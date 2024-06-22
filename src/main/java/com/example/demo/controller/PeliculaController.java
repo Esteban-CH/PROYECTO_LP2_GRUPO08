@@ -34,20 +34,20 @@ public class PeliculaController {
         binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
     }
 	
-	@GetMapping("/peliculas")
+	@GetMapping("/listar_pelicula")
     public String listarPeliculas(Model model) {
         model.addAttribute("peliculas", repository.findAll());
         return "peliculas/listar";
     }
 	
 	//REGISTRAR
-	@GetMapping("/peliculas/nueva")
+	@GetMapping("/registrar_pelicula")
     public String mostrarFormularioNuevaPelicula(Model model) {
         model.addAttribute("pelicula", new PeliculaEntity());
         return "peliculas/formularioPelicula";
     }
 	
-	@PostMapping("/peliculas/nueva")
+	@PostMapping("/registrar_pelicula")
     public String guardarPelicula(@ModelAttribute PeliculaEntity pelicula, @RequestAttribute("imagen") MultipartFile imagen) {
         if (!imagen.isEmpty()) {
             try {
@@ -63,7 +63,7 @@ public class PeliculaController {
     }
 	
 	//EDITAR
-	@GetMapping("/peliculas/editar/{id}")
+	@GetMapping("/editar_pelicula/{id}")
 	public String mostrarFormularioEditarPelicula(@PathVariable("id") Integer id, Model model) {
 	    PeliculaEntity pelicula = repository.findById(id)
 	            .orElseThrow(() -> new IllegalArgumentException("Id de película no válido:" + id));
@@ -71,7 +71,7 @@ public class PeliculaController {
 	    return "peliculas/editarPelicula";
 	}
 
-	@PostMapping("/editar/{id}")
+	@PostMapping("/editar_pelicula/{id}")
 	public String guardarCambiosPelicula(@PathVariable("id") Integer id,
 	                                     @ModelAttribute("pelicula") PeliculaEntity pelicula,
 	                                     @RequestParam("imagen") MultipartFile imagen) throws IOException {
@@ -86,11 +86,11 @@ public class PeliculaController {
 	}
 
     //ELIMINAR
-    @GetMapping("/peliculas/eliminar/{id}")
+    @GetMapping("/eliminar_pelicula/{id}")
     public String eliminarPelicula(@PathVariable("id") Integer id) {
         PeliculaEntity pelicula = repository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Id de película no válido:" + id));
         repository.delete(pelicula);
-        return "redirect:/peliculas";
+        return "redirect:/listar_pelicula";
     }
 }
