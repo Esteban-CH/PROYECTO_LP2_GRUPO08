@@ -59,7 +59,7 @@ public class PeliculaController {
         pelicula.setFchaCreacionPelicula(new Date());
         pelicula.setFchaActualizacionPelicula(new Date());
         repository.save(pelicula);
-        return "redirect:/peliculas";
+        return "redirect:/listar_pelicula";
     }
 	
 	//EDITAR
