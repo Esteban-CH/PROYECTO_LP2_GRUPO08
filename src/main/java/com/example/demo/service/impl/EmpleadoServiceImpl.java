@@ -43,8 +43,8 @@ public class EmpleadoServiceImpl implements EmpleadoService{
 			empleadoBuscarId.setEmailEmpleado(empleado.getEmailEmpleado());
 			empleadoBuscarId.setPasswordEmpleado(empleado.getPasswordEmpleado());
 			empleadoBuscarId.setTelefonoEmpleado(empleado.getTelefonoEmpleado());
-			empleado.setFchaCreacionEmpleado(empleado.getFchaCreacionEmpleado());
 			empleadoBuscarId.setFchaActualizacionEmpleado(new Date());
+			empleado.setFchaCreacionEmpleado(empleado.getFchaCreacionEmpleado());
 			return empleadoRepository.save(empleadoBuscarId);
 		}
 		return null;
