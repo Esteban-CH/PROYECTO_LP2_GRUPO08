@@ -18,8 +18,8 @@ import com.example.demo.service.EmpleadoService;
 @Controller
 public class EmpleadoController {
 
-	@Autowired
-	private EmpleadoRepository repository;
+	//@Autowired
+	//private EmpleadoRepository repository;
 	
 	@Autowired
 	private EmpleadoService empleadoService;
