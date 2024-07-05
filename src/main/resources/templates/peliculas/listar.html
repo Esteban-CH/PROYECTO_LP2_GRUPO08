@@ -15,9 +15,11 @@
             background-color: #f8f9fa;
         }
         .movie-image {
-            max-width: 100px;
-            height: auto;
-            border-radius: 50%;
+            width: 100px; /* Ancho deseado */
+            height: 100px; /* Alto deseado */
+            object-fit: cover; /* Para asegurar que la imagen se ajuste sin distorsión */
+            border: 2px solid #dee2e6; /* Borde alrededor de la imagen */
+            border-radius: 5px; /* Bordes redondeados */
         }
         .table-container {
             margin-top: 20px;
