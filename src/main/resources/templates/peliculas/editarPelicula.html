@@ -6,43 +6,110 @@
     <title>Editar Película</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/css/sidebar.css"> <!-- Agregar el CSS específico del sidebar -->
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f9fa;
+        }
+        .container {
+            max-width: 800px; /* Ajustar el ancho según sea necesario */
+            margin-top: 50px;
+            margin-bottom: 50px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            border-radius: 10px;
+            background-color: #ffffff;
+        }
+        h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #343a40;
+        }
+        label {
+            font-weight: bold;
+            color: #495057;
+        }
+        .form-control {
+            border-radius: 5px;
+            box-shadow: none;
+        }
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+            width: 100%;
+        }
+        .btn-primary:hover {
+            background-color: #0069d9;
+            border-color: #0062cc;
+        }
+        .btn-secondary {
+            width: 100%;
+        }
+        .img-preview {
+            max-width: 100%; /* Ajustar el tamaño máximo de la imagen */
+            height: auto; /* Para mantener la proporción de la imagen */
+            display: block; /* Para centrar la imagen */
+            margin: 0 auto; /* Para centrar la imagen */
+        }
+        .image-container {
+            text-align: center; /* Alinear el contenedor al centro */
+            margin-bottom: 20px; /* Espacio inferior */
+        }
+        .form-container {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+        }
+    </style>
 </head>
 <body>
-<div class="container-fluid">
+<!-- Sidebar -->
+<div th:replace="fragmentos/sidebar :: sidebar"></div>
+
+<!-- Main content -->
+<div class="container">
     <div class="row">
-        <div th:replace="fragmentos/sidebar :: sidebar"></div>
-        <div class="content col">
-            <div class="container mt-4">
-                <h2>Editar Película</h2>
-                <form method="POST" enctype="multipart/form-data" th:action="@{/editar_pelicula/{id}(id=${pelicula.peliculaId})}" th:object="${pelicula}">
+        <!-- Columna para la imagen actual de la película -->
+        <div class="col-lg-4">
+            <div class="image-container">
+                <h4 class="mb-3">Imagen Actual</h4>
+                <img th:if="${pelicula.urlImagenPelicula}" th:src="@{'/foto_peliculas/' + ${pelicula.urlImagenPelicula}}" class="img-fluid rounded img-preview" alt="Imagen Actual">
+                <span th:unless="${pelicula.urlImagenPelicula}">No hay imagen</span>
+            </div>
+        </div>
+        
+        <!-- Columna para el formulario de edición -->
+        <div class="col-lg-8">
+            <div class="form-container">
+                <h2 class="mb-4">Editar Película</h2>
+                <form method="POST" enctype="multipart/form-data" th:action="@{/editar_pelicula/{id}(id=${pelicula.peliculaId})}" th:object="${pelicula}" novalidate>
                     <div class="form-group">
                         <label for="tituloPelicula">Título</label>
                         <input type="text" class="form-control" id="tituloPelicula" th:field="*{tituloPelicula}" required>
+                        <div th:if="${#fields.hasErrors('tituloPelicula')}" th:errors="*{tituloPelicula}" class="invalid-feedback"></div>
                     </div>
                     <div class="form-group">
                         <label for="descripcionPelicula">Descripción</label>
                         <textarea class="form-control" id="descripcionPelicula" th:field="*{descripcionPelicula}" required></textarea>
+                        <div th:if="${#fields.hasErrors('descripcionPelicula')}" th:errors="*{descripcionPelicula}" class="invalid-feedback"></div>
                     </div>
                     <div class="form-group">
                         <label for="directorPelicula">Director</label>
                         <input type="text" class="form-control" id="directorPelicula" th:field="*{directorPelicula}" required>
+                        <div th:if="${#fields.hasErrors('directorPelicula')}" th:errors="*{directorPelicula}" class="invalid-feedback"></div>
                     </div>
                     <div class="form-group">
                         <label for="fechaEstrenoPelicula">Fecha de Estreno</label>
                         <input type="date" class="form-control" id="fechaEstrenoPelicula" th:field="*{fechaEstrenoPelicula}" required>
+                        <div th:if="${#fields.hasErrors('fechaEstrenoPelicula')}" th:errors="*{fechaEstrenoPelicula}" class="invalid-feedback"></div>
                     </div>
                     <div class="form-group">
                         <label for="duracionPelicula">Duración (minutos)</label>
                         <input type="number" class="form-control" id="duracionPelicula" th:field="*{duracionPelicula}" required>
+                        <div th:if="${#fields.hasErrors('duracionPelicula')}" th:errors="*{duracionPelicula}" class="invalid-feedback"></div>
                     </div>
                     
-                    <!-- Mostrar la imagen actual de la película -->
-                    <div class="form-group">
-                        <label>Imagen Actual</label><br>
-                        <img th:if="${pelicula.urlImagenPelicula}" th:src="${pelicula.urlImagenPelicula}" class="img-fluid rounded" style="max-width: 200px;">
-                        <span th:unless="${pelicula.urlImagenPelicula}">No hay imagen</span>
-                    </div>
-                    
+                    <!-- Espacio para la imagen actual de la película -->
                     <div class="form-group">
                         <label for="imagen">Cambiar Imagen</label>
                         <input type="file" class="form-control-file" id="imagen" name="imagen">
@@ -66,4 +133,3 @@
 </script>
 </body>
 </html>
-

@@ -6,54 +6,106 @@
     <title>Registro de Película</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/css/sidebar.css"> <!-- Agregar el CSS específico del sidebar -->
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f9fa;
+        }
+        .container {
+            max-width: 800px; /* Ajustar el ancho según sea necesario */
+            margin-top: 50px;
+            margin-bottom: 50px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            border-radius: 10px;
+            background-color: #ffffff;
+        }
+        h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #343a40;
+        }
+        label {
+            font-weight: bold;
+            color: #495057;
+        }
+        .form-control {
+            border-radius: 5px;
+            box-shadow: none;
+        }
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+            width: 100%;
+        }
+        .btn-primary:hover {
+            background-color: #0069d9;
+            border-color: #0062cc;
+        }
+        .btn-secondary {
+            width: 100%;
+        }
+    </style>
 </head>
 <body>
-<div class="container-fluid">
-    <div class="row">
-        <div th:replace="fragmentos/sidebar :: sidebar"></div>
-        <div class="content col">
-            <div class="container mt-4">
-                <h2>Registro de Nueva Película</h2>
-                <form th:action="@{/registrar_pelicula}" th:object="${pelicula}" method="post" enctype="multipart/form-data">
-                    <div class="form-group">
-                        <label for="tituloPelicula">Título</label>
-                        <input type="text" class="form-control" id="tituloPelicula" th:field="*{tituloPelicula}" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="descripcionPelicula">Descripción</label>
-                        <textarea class="form-control" id="descripcionPelicula" th:field="*{descripcionPelicula}" required></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label for="directorPelicula">Director</label>
-                        <input type="text" class="form-control" id="directorPelicula" th:field="*{directorPelicula}" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="fechaEstrenoPelicula">Fecha de Estreno</label>
-                        <input type="date" class="form-control" id="fechaEstrenoPelicula" th:field="*{fechaEstrenoPelicula}" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="duracionPelicula">Duración (minutos)</label>
-                        <input type="number" class="form-control" id="duracionPelicula" th:field="*{duracionPelicula}" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="imagen">Imagen</label>
-                        <input type="file" class="form-control-file" id="imagen" name="imagen">
-                    </div>
-                    <button type="submit" class="btn btn-primary">Registrar Película</button>
-                </form>
-                <br>
-                <a th:href="@{/listar_pelicula}" class="btn btn-secondary">Volver</a>
-            </div>
+<!-- Sidebar -->
+<div th:replace="fragmentos/sidebar :: sidebar"></div>
+
+<!-- Main content -->
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-lg-8"> <!-- Ajusta el tamaño del formulario según sea necesario -->
+            <h2 class="mb-4">Registro de Nueva Película</h2>
+            <form th:action="@{/registrar_pelicula}" th:object="${pelicula}" method="post" enctype="multipart/form-data" id="registroForm">
+                <div class="form-group">
+                    <label for="tituloPelicula">Título</label>
+                    <input type="text" class="form-control" id="tituloPelicula" th:field="*{tituloPelicula}" required>
+                </div>
+                <div class="form-group">
+                    <label for="descripcionPelicula">Descripción</label>
+                    <textarea class="form-control" id="descripcionPelicula" th:field="*{descripcionPelicula}" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="directorPelicula">Director</label>
+                    <input type="text" class="form-control" id="directorPelicula" th:field="*{directorPelicula}" required>
+                </div>
+                <div class="form-group">
+                    <label for="fechaEstrenoPelicula">Fecha de Estreno</label>
+                    <input type="date" class="form-control" id="fechaEstrenoPelicula" th:field="*{fechaEstrenoPelicula}" required>
+                </div>
+                <div class="form-group">
+                    <label for="duracionPelicula">Duración (minutos)</label>
+                    <input type="number" class="form-control" id="duracionPelicula" th:field="*{duracionPelicula}" required>
+                </div>
+                <div class="form-group">
+                    <label for="imagen">Imagen</label>
+                    <input type="file" class="form-control-file" id="imagen" name="imagen">
+                </div>
+                <button type="submit" class="btn btn-primary">Registrar Película</button>
+            </form>
+            <br>
+            <a th:href="@{/listar_pelicula}" class="btn btn-secondary">Volver</a>
         </div>
     </div>
 </div>
 
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-<script src="https://unpkg.com/feather-icons"></script>
 <script>
-    feather.replace()
+    // Validación básica del formulario con JavaScript
+    document.getElementById('registroForm').addEventListener('submit', function(event) {
+        var titulo = document.getElementById('tituloPelicula').value.trim();
+        var descripcion = document.getElementById('descripcionPelicula').value.trim();
+        var director = document.getElementById('directorPelicula').value.trim();
+        var fechaEstreno = document.getElementById('fechaEstrenoPelicula').value.trim();
+        var duracion = document.getElementById('duracionPelicula').value.trim();
+        
+        if (titulo === '' || descripcion === '' || director === '' || fechaEstreno === '' || duracion === '') {
+            event.preventDefault();
+            alert('Todos los campos son obligatorios. Por favor, complete todos los campos.');
+        }
+    });
 </script>
 </body>
 </html>
