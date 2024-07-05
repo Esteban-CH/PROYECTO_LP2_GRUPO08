@@ -5,53 +5,65 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Editar Película</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/sidebar.css"> <!-- Agregar el CSS específico del sidebar -->
 </head>
 <body>
-<div class="container mt-4">
-    <h2>Editar Película</h2>
-    <form method="POST" enctype="multipart/form-data" th:action="@{/peliculas/editar/{id}(id=${pelicula.peliculaId})}" th:object="${pelicula}">
-        
-        <div class="form-group">
-            <label for="tituloPelicula">Título</label>
-            <input type="text" class="form-control" id="tituloPelicula" th:field="*{tituloPelicula}" required>
+<div class="container-fluid">
+    <div class="row">
+        <div th:replace="fragmentos/sidebar :: sidebar"></div>
+        <div class="content col">
+            <div class="container mt-4">
+                <h2>Editar Película</h2>
+                <form method="POST" enctype="multipart/form-data" th:action="@{/editar_pelicula/{id}(id=${pelicula.peliculaId})}" th:object="${pelicula}">
+                    <div class="form-group">
+                        <label for="tituloPelicula">Título</label>
+                        <input type="text" class="form-control" id="tituloPelicula" th:field="*{tituloPelicula}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="descripcionPelicula">Descripción</label>
+                        <textarea class="form-control" id="descripcionPelicula" th:field="*{descripcionPelicula}" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="directorPelicula">Director</label>
+                        <input type="text" class="form-control" id="directorPelicula" th:field="*{directorPelicula}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="fechaEstrenoPelicula">Fecha de Estreno</label>
+                        <input type="date" class="form-control" id="fechaEstrenoPelicula" th:field="*{fechaEstrenoPelicula}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="duracionPelicula">Duración (minutos)</label>
+                        <input type="number" class="form-control" id="duracionPelicula" th:field="*{duracionPelicula}" required>
+                    </div>
+                    
+                    <!-- Mostrar la imagen actual de la película -->
+                    <div class="form-group">
+                        <label>Imagen Actual</label><br>
+                        <img th:if="${pelicula.urlImagenPelicula}" th:src="${pelicula.urlImagenPelicula}" class="img-fluid rounded" style="max-width: 200px;">
+                        <span th:unless="${pelicula.urlImagenPelicula}">No hay imagen</span>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="imagen">Cambiar Imagen</label>
+                        <input type="file" class="form-control-file" id="imagen" name="imagen">
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+                </form>
+                <br>
+                <a th:href="@{/listar_pelicula}" class="btn btn-secondary">Cancelar</a>
+            </div>
         </div>
-        <div class="form-group">
-            <label for="descripcionPelicula">Descripción</label>
-            <textarea class="form-control" id="descripcionPelicula" th:field="*{descripcionPelicula}" required></textarea>
-        </div>
-        <div class="form-group">
-            <label for="directorPelicula">Director</label>
-            <input type="text" class="form-control" id="directorPelicula" th:field="*{directorPelicula}" required>
-        </div>
-        <div class="form-group">
-            <label for="fechaEstrenoPelicula">Fecha de Estreno</label>
-            <input type="date" class="form-control" id="fechaEstrenoPelicula" th:field="*{fechaEstrenoPelicula}" required>
-        </div>
-        <div class="form-group">
-            <label for="duracionPelicula">Duración (minutos)</label>
-            <input type="number" class="form-control" id="duracionPelicula" th:field="*{duracionPelicula}" required>
-        </div>
-        
-        <!-- Mostrar la imagen actual de la película -->
-        <div class="form-group">
-            <label>Imagen Actual</label><br>
-            <img th:if="${pelicula.imagenPelicula}" th:src="${pelicula.imagenPelicula}" class="img-fluid rounded" style="max-width: 200px;">
-            <span th:unless="${pelicula.imagenPelicula}">No hay imagen</span>
-        </div>
-        
-        <div class="form-group">
-            <label for="imagen">Cambiar Imagen</label>
-            <input type="file" class="form-control-file" id="imagen" name="imagen">
-        </div>
-        
-        <button type="submit" class="btn btn-primary">Guardar Cambios</button>
-    </form>
-    <br>
-    <a th:href="@{/peliculas}" class="btn btn-secondary">Cancelar</a>
+    </div>
 </div>
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://unpkg.com/feather-icons"></script>
+<script>
+    feather.replace()
+</script>
 </body>
 </html>
+
