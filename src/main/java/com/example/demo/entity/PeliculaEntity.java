@@ -45,11 +45,10 @@ public class PeliculaEntity {
     private Date fechaEstrenoPelicula;
 	
 	@Column(name = "duracion_pelicula")
-    private int duracionPelicula; // en minutos
+    private int duracionPelicula;
 	
-	@Lob
-	@Column(name = "imagen_pelicula", columnDefinition = "LONGBLOB")
-    private byte[] imagenPelicula;
+	@Column(name = "url_imagen", columnDefinition = "TEXT")
+    private String urlImagenPelicula;
 	
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "fecha_creacion_pelicula", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")

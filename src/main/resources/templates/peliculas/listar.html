@@ -37,17 +37,17 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr th:each="pelicula : ${peliculas}">
+                            <tr th:each="pelicula : ${pelicula}">
                                 <td th:text="${pelicula.peliculaId}"></td>
                                 <td th:text="${pelicula.tituloPelicula}"></td>
                                 <td th:text="${pelicula.descripcionPelicula}"></td>
                                 <td th:text="${pelicula.directorPelicula}"></td>
                                 <td th:text="${#dates.format(pelicula.fechaEstrenoPelicula, 'yyyy-MM-dd')}"></td>
                                 <td th:text="${pelicula.duracionPelicula}"></td>
-                                <td><img th:src="@{${pelicula.imagenPelicula}}" alt="Imagen de la película" class="movie-image" width="10px" height="10px"></td>
+                                <td><img th:src="@{${pelicula.urlImagenPelicula}}" alt="Imagen de la película" class="movie-image" width="10px" height="10px"></td>
                                 <td>
                                     <a th:href="@{/editar_pelicula/{id}(id=${pelicula.peliculaId})}" class="btn btn-warning">Editar</a>
-                                    <a th:href="@{/eliminar_pelicula/{id}(id=${pelicula.peliculaId})}" class="btn btn-danger">Eliminar</a>
+                                    <a th:href="@{/eliminar_pelicula/{id}(id=${pelicula.peliculaId})}" class="btn btn-danger" onclick="return confirm('¿Está seguro de que desea eliminar esta pelicula?');">Eliminar</a>
                                 </td>
                             </tr>
                         </tbody>

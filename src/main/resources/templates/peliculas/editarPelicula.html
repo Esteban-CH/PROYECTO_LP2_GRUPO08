@@ -39,8 +39,8 @@
                     <!-- Mostrar la imagen actual de la película -->
                     <div class="form-group">
                         <label>Imagen Actual</label><br>
-                        <img th:if="${pelicula.imagenPelicula}" th:src="${pelicula.imagenPelicula}" class="img-fluid rounded" style="max-width: 200px;">
-                        <span th:unless="${pelicula.imagenPelicula}">No hay imagen</span>
+                        <img th:if="${pelicula.urlImagenPelicula}" th:src="${pelicula.urlImagenPelicula}" class="img-fluid rounded" style="max-width: 200px;">
+                        <span th:unless="${pelicula.urlImagenPelicula}">No hay imagen</span>
                     </div>
                     
                     <div class="form-group">
