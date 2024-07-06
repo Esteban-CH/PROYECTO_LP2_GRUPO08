@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Cliente Dashboard</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+</head>
+<body>
+<div class="container">
+    <h2>Cliente Dashboard</h2>
+    <p th:text="'Hola, ' + ${user.nombreCliente} + '!'"></p>
+    <a th:href="@{/peliculas}" class="btn btn-primary">Ver Películas</a>
+    <a th:href="@{/logout}" class="btn btn-secondary">Logout</a>
+</div>
+</body>
+</html>

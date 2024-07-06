@@ -46,7 +46,7 @@ public class LoginController {
             session.setAttribute("role", "ADMIN");
             return "redirect:/admin";
         } else {
-            model.addAttribute("error", "Invalid email or password");
+            model.addAttribute("error", "Correo o contraseña invalida");
             return "login";
         }
     }

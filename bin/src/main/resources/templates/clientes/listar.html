@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Listado de Clientes</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/sidebar.css">
+</head>
+<body>
+<div class="container-fluid">
+    <div class="row">
+        <div th:replace="fragmentos/sidebar :: sidebar"></div>
+        <div class="content col">
+            <div class="container mt-4">
+                <h2>Listado de Clientes</h2>
+                <a th:href="@{/registar_cliente}" class="btn btn-primary mb-3">Agregar Nuevo Cliente</a>
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Apellido</th>
+                        <th>Email</th>
+                        <th>Teléfono</th>
+                        <th>Acciones</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="cliente : ${cliente}">
+                        <td th:text="${cliente.clienteId}"></td>
+                        <td th:text="${cliente.nombreCliente}"></td>
+                        <td th:text="${cliente.apellidoCliente}"></td>
+                        <td th:text="${cliente.emailCliente}"></td>
+                        <td th:text="${cliente.telefonoCliente}"></td>
+                        <td>
+                            <a th:href="@{/editar_cliente/{id}(id=${cliente.clienteId})}" class="btn btn-warning btn-sm">Editar</a>
+                            <a th:href="@{/detalle_cliente/{id}(id=${cliente.clienteId})}" class="btn btn-info btn-sm">Ver</a>
+                            <a th:href="@{/eliminar_cliente/{id}(id=${cliente.clienteId})}" class="btn btn-danger btn-sm" onclick="return confirm('¿Está seguro de que desea eliminar este cliente?');">Eliminar</a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://unpkg.com/feather-icons"></script>
+<script>
+    feather.replace()
+</script>
+</body>
+</html>

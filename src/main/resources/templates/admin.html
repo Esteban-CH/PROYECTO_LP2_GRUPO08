@@ -1,17 +1,93 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard</title>
-    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/sidebar.css"> <!-- Agregar el CSS específico del sidebar -->
+    <style>
+        .dashboard {
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .dashboard-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .dashboard-card {
+            background-color: #fff;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .card-number {
+            font-size: 36px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .card-label {
+            font-size: 18px;
+            color: #6c757d;
+            text-align: center;
+        }
+
+        .greeting {
+            font-size: 18px;
+            margin-bottom: 20px;
+            font-weight: bold; /* Añadido para hacer el nombre en negrita */
+        }
+    </style>
 </head>
 <body>
-<div class="container">
-    <h2>Admin Dashboard</h2>
-    <p th:text="'Hola, ' + ${user.nombreEmpleado} + '!'"></p>
-    <a th:href="@{/clientes}" class="btn btn-primary">Gestionar Clientes</a>
-    <a th:href="@{/empleados}" class="btn btn-primary">Gestionar Empleados</a>
-    <a th:href="@{/peliculas}" class="btn btn-primary">Gestionar Películas</a>
-    <a th:href="@{/logout}" class="btn btn-secondary">Logout</a>
+<div class="container-fluid">
+    <div class="row">
+        <!-- Incluir el fragmento del sidebar -->
+        <div th:replace="fragmentos/sidebar :: sidebar"></div>
+
+        <!-- Contenido principal -->
+        <div class="content col">
+            <div class="dashboard">
+                <h2 class="dashboard-title">Dashboard Administrador</h2>
+                <p class="greeting" th:text="'Hola, ' + ${user.nombreEmpleado} + '!'"></p>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="dashboard-card">
+                            <div class="card-number" th:text="${numClientes}"></div>
+                            <div class="card-label">Clientes Registrados</div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="dashboard-card">
+                            <div class="card-number" th:text="${numEmpleados}"></div>
+                            <div class="card-label">Empleados Registrados</div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="dashboard-card">
+                            <div class="card-number" th:text="${numPeliculas}"></div>
+                            <div class="card-label">Películas Registradas</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://unpkg.com/feather-icons"></script> <!-- Para iconos Feather -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css"></script> <!-- Para iconos Bootstrap Icons -->
 </body>
 </html>

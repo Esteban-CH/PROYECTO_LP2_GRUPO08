@@ -10,4 +10,6 @@ import com.example.demo.entity.ClienteEntity;
 @Repository
 public interface ClienteRepository extends JpaRepository<ClienteEntity, Integer>{
 	Optional<ClienteEntity> findByEmailCliente(String emailCliente);
+
+	boolean existsByEmailCliente(String emailCliente);
 }
