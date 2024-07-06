@@ -6,52 +6,140 @@
     <title>Listado de Empleados</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/sidebar.css"> <!-- Agregar el CSS específico del sidebar -->
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f4f9;
+        }
+        .container-fluid {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .content {
+            width: 80%;
+            max-width: 1200px;
+            margin-top: 20px;
+        }
+        .card {
+            border: none;
+            border-radius: 15px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .card-header {
+            background-color: #343a40;
+            color: white;
+            font-weight: bold;
+            border-radius: 15px 15px 0 0;
+            padding: 15px 20px;
+        }
+        .card-body {
+            padding: 20px;
+        }
+        .btn {
+            font-size: 14px;
+            border-radius: 5px;
+            padding: 8px 16px;
+            margin-right: 5px;
+        }
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
+        }
+        .btn-danger {
+            background-color: #dc3545;
+            border-color: #dc3545;
+        }
+        .btn-danger:hover {
+            background-color: #bd2130;
+            border-color: #bd2130;
+        }
+        .table-responsive {
+            overflow-x: auto;
+        }
+    </style>
 </head>
 <body>
 <div class="container-fluid">
     <div class="row">
         <div th:replace="fragmentos/sidebar :: sidebar"></div>
         <div class="content col">
-            <div class="container mt-4">
-                <h2>Listado de Empleados</h2>
-            </div>
-            <a th:href="@{/registrar_empleado}" class="btn btn-primary mb-4">Registrar Nuevo Empleado</a>
-            <div class="table-responsive">
-                <table class="table table-striped">
-                    <thead class="thead-dark">
-                        <tr>
-                            <th>ID</th>
-                            <th>Nombre</th>
-                            <th>Apellido</th>
-                            <th>Email</th>
-                            <th>Teléfono</th>
-                            <th>Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr th:each="empleado : ${empleado}">
-                            <td th:text="${empleado.empleadoId}"></td>
-                            <td th:text="${empleado.nombreEmpleado}"></td>
-                            <td th:text="${empleado.apellidoEmpleado}"></td>
-                            <td th:text="${empleado.emailEmpleado}"></td>
-                            <td th:text="${empleado.telefonoEmpleado}"></td>
-                            <td>
-                                <a th:href="@{/editar_empleado/{id}(id=${empleado.empleadoId})}" class="btn btn-warning btn-sm">Editar</a>
-                                <a th:href="@{/detalle_empleado/{id}(id=${empleado.empleadoId})}" class="btn btn-info btn-sm">Ver</a>
-                                <a th:href="@{/eliminar_empleado/{id}(id=${empleado.empleadoId})}" class="btn btn-danger btn-sm" onclick="return confirm('¿Está seguro de que desea eliminar este empleado?');">Eliminar</a>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="text-center mb-0">Listado de Empleados</h2>
+                </div>
+                <div class="card-body">
+                    <a th:href="@{/registrar_empleado}" class="btn btn-primary mb-4">Registrar Nuevo Empleado</a>
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Nombre</th>
+                                    <th>Apellido</th>
+                                    <th>Email</th>
+                                    <th>Teléfono</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="empleado : ${empleado}">
+                                    <td th:text="${empleado.empleadoId}"></td>
+                                    <td th:text="${empleado.nombreEmpleado}"></td>
+                                    <td th:text="${empleado.apellidoEmpleado}"></td>
+                                    <td th:text="${empleado.emailEmpleado}"></td>
+                                    <td th:text="${empleado.telefonoEmpleado}"></td>
+                                    <td>
+                                        <a th:href="@{/editar_empleado/{id}(id=${empleado.empleadoId})}" class="btn btn-warning btn-sm">Editar</a>
+                                        <a th:href="@{/detalle_empleado/{id}(id=${empleado.empleadoId})}" class="btn btn-info btn-sm">Ver</a>
+                                        <!-- Botón para abrir el modal de confirmación -->
+                                        <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" th:data-target="'#deleteModal' + ${empleado.empleadoId}">
+                                            Eliminar
+                                        </button>
+                                        <!-- Modal de confirmación de eliminación -->
+                                        <div th:id="'deleteModal' + ${empleado.empleadoId}" class="modal fade" tabindex="-1" role="dialog">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title">Confirmación de Eliminación</h5>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <p>¿Está seguro de que desea eliminar este empleado?</p>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                                        <a th:href="@{/eliminar_empleado/{id}(id=${empleado.empleadoId})}" class="btn btn-danger">Eliminar</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </div>
+
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script src="https://unpkg.com/feather-icons"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css"></script>
+<script>
+    feather.replace();
+</script>
 
 </body>
 </html>
