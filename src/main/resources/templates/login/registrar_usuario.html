@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrar Usuario</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f8f9fa;
+        }
+        .registro-container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+        }
+        .registro-container h2 {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .btn-atras {
+            background-color: #6c757d;
+            border-color: #6c757d;
+        }
+        .btn-atras:hover {
+            background-color: #5a6268;
+            border-color: #545b62;
+        }
+        .invalid-feedback {
+            display: none;
+            color: #dc3545;
+        }
+        .is-invalid ~ .invalid-feedback {
+            display: block;
+        }
+        .required-field-message {
+            color: #dc3545;
+            font-size: 12px;
+            margin-top: 5px;
+            display: none;
+        }
+        .is-invalid ~ .required-field-message {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+<div class="registro-container">
+    <h2>Registrar Usuario</h2>
+    <form th:action="@{/registrar_cliente}" method="post" th:object="${cliente}" id="registrarClienteForm" novalidate>
+        <div class="form-group">
+            <label for="nombreCliente">Nombre</label>
+            <input type="text" id="nombreCliente" name="nombreCliente" class="form-control" th:field="*{nombreCliente}" placeholder="Ingrese su nombre" required>
+            <div class="invalid-feedback">Debes rellenar este campo.</div>
+            <div class="required-field-message">Este campo debe ser llenado obligatorio.</div>
+        </div>
+        <div class="form-group">
+            <label for="apellidoCliente">Apellido</label>
+            <input type="text" id="apellidoCliente" name="apellidoCliente" class="form-control" th:field="*{apellidoCliente}" placeholder="Ingrese su apellido" required>
+            <div class="invalid-feedback">Debes rellenar este campo.</div>
+            <div class="required-field-message">Este campo debe ser llenado obligatorio.</div>
+        </div>
+        <div class="form-group">
+            <label for="emailCliente">Email</label>
+            <input type="email" id="emailCliente" name="emailCliente" class="form-control" th:field="*{emailCliente}" placeholder="Ingrese su email" required>
+            <div class="invalid-feedback">Debes rellenar este campo.</div>
+            <div class="required-field-message">Este campo debe ser llenado obligatorio.</div>
+            <small id="emailHelp" class="form-text text-danger"></small>
+        </div>
+        <div class="form-group">
+            <label for="telefonoCliente">Teléfono</label>
+            <input type="text" id="telefonoCliente" name="telefonoCliente" class="form-control" th:field="*{telefonoCliente}" placeholder="Ingrese su teléfono" required>
+            <div class="invalid-feedback">Debes rellenar este campo.</div>
+            <div class="required-field-message">Este campo debe ser llenado obligatorio.</div>
+        </div>
+        <div class="form-group">
+            <label for="passwordCliente">Password</label>
+            <input type="password" id="passwordCliente" name="passwordCliente" class="form-control" th:field="*{passwordCliente}" placeholder="Ingrese su contraseña" required>
+            <div class="invalid-feedback">Debes rellenar este campo.</div>
+            <div class="required-field-message">Este campo debe ser llenado obligatorio.</div>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block">Registrar</button>
+    </form>
+    <div class="text-center mt-3">
+        <a href="/login" class="btn btn-atras btn-block">Atrás</a>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+    function validarCampos() {
+        var form = document.getElementById('registrarClienteForm');
+        var valid = true;
+
+        form.querySelectorAll('input[required]').forEach(function(input) {
+            var feedback = input.nextElementSibling;
+            var requiredMessage = input.nextElementSibling.nextElementSibling;
+
+            if (!input.value.trim()) {
+                input.classList.add('is-invalid');
+                feedback.style.display = 'none';
+                requiredMessage.style.display = 'block';
+                valid = false;
+            } else {
+                input.classList.remove('is-invalid');
+                feedback.style.display = 'none';
+                requiredMessage.style.display = 'none';
+            }
+        });
+
+        return valid;
+    }
+
+    function validarEmailExistente(email) {
+        return fetch('/verificar_correo?email=' + encodeURIComponent(email))
+            .then(response => response.json())
+            .then(data => {
+                if (data.exists) {
+                    document.getElementById('emailCliente').classList.add('is-invalid');
+                    document.getElementById('emailHelp').innerText = 'El correo ya está registrado.';
+                    return false;
+                } else {
+                    document.getElementById('emailCliente').classList.remove('is-invalid');
+                    document.getElementById('emailHelp').innerText = '';
+                    return true;
+                }
+            });
+    }
+
+    document.getElementById('registrarClienteForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+        var form = event.target;
+
+        if (validarCampos()) {
+            var email = document.getElementById('emailCliente').value;
+            validarEmailExistente(email).then(emailValido => {
+                if (emailValido) {
+                    form.submit();
+                }
+            });
+        }
+    });
+
+    document.querySelectorAll('input[required]').forEach(function(input) {
+        input.addEventListener('focus', function() {
+            var feedback = this.nextElementSibling;
+            var requiredMessage = this.nextElementSibling.nextElementSibling;
+
+            feedback.style.display = 'none';
+            requiredMessage.style.display = 'none';
+        });
+    });
+</script>
+</body>
+</html>

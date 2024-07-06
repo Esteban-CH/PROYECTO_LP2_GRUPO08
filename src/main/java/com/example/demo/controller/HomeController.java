@@ -6,11 +6,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.example.demo.entity.ClienteEntity;
 import com.example.demo.entity.PeliculaEntity;
 import com.example.demo.repository.ClienteRepository;
 import com.example.demo.repository.EmpleadoRepository;
 import com.example.demo.repository.PeliculaRepository;
+import com.example.demo.service.ClienteService;
 import com.example.demo.service.PeliculaService;
 
 import jakarta.servlet.http.HttpSession;
@@ -29,6 +34,9 @@ public class HomeController {
 	
 	@Autowired
 	private PeliculaRepository peliculaRepository;
+	
+	@Autowired
+    private ClienteService clienteService;
 
 	@GetMapping("/logout")
     public String logout(HttpSession session) {
@@ -42,17 +50,14 @@ public class HomeController {
 	        return "redirect:/login";
 	    }
 
-	    // Obtener el usuario y los datos relevantes (número de registros)
-	    // Aquí se simulan los datos, reemplázalos con tu lógica de negocio real
-	    // Supongamos que estos datos vienen de tu base de datos o repositorios
 	    long numClientes = clienteRepository.count();
 	    long numEmpleados = empleadoRepository.count();
 	    long numPeliculas = peliculaRepository.count();
 
-	    model.addAttribute("user", session.getAttribute("user")); // Usuario actual
-	    model.addAttribute("numClientes", numClientes); // Número de clientes registrados
-	    model.addAttribute("numEmpleados", numEmpleados); // Número de empleados registrados
-	    model.addAttribute("numPeliculas", numPeliculas); // Número de películas registradas
+	    model.addAttribute("user", session.getAttribute("user"));
+	    model.addAttribute("numClientes", numClientes);
+	    model.addAttribute("numEmpleados", numEmpleados);
+	    model.addAttribute("numPeliculas", numPeliculas);
 
 	    return "admin";
 	}
@@ -63,8 +68,20 @@ public class HomeController {
 	            return "redirect:/login";
 	        }
 	        model.addAttribute("user", session.getAttribute("user"));
-	        List<PeliculaEntity> peliculas = peliculaService.listarPeliculas(); // Obtener todas las películas desde el servicio
+	        List<PeliculaEntity> peliculas = peliculaService.listarPeliculas();
 	        model.addAttribute("peliculas", peliculas);
 	        return "cliente";
+	    }
+	 
+	 @GetMapping("/registrar_usuario")
+	    public String mostrarFormularioNuevoCliente(Model model) {
+	        model.addAttribute("cliente", new ClienteEntity());
+	        return "login/registrar_usuario";
+	    }
+
+	    @PostMapping("/registrar_usuario")
+	    public String guardarCliente(@ModelAttribute ClienteEntity cliente) {
+	        clienteService.insertarCliente(cliente);
+	        return "redirect:/login";
 	    }
 }
