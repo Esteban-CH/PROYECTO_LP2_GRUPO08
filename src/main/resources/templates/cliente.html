@@ -2,14 +2,74 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Cliente Dashboard</title>
-    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa; /* Color de fondo para el cuerpo */
+            padding-top: 20px; /* Espacio superior */
+        }
+        .card {
+            border: none; /* Sin borde */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Sombra ligera */
+            transition: transform 0.2s; /* Transición suave */
+        }
+        .card:hover {
+            transform: translateY(-5px); /* Efecto de elevación al pasar el ratón */
+        }
+        .card img {
+            height: 300px; /* Altura fija para las imágenes */
+            object-fit: cover; /* Cubrir completamente el espacio asignado */
+        }
+        .card-title {
+            font-size: 1.2rem; /* Tamaño del título */
+            margin-top: 10px; /* Margen superior */
+        }
+    </style>
 </head>
 <body>
-<div class="container">
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">Mi Aplicación</a>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/cliente}">Inicio</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/peliculas}">Ver Películas</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/logout}">Logout</a>
+                </li>
+            </ul>
+            <span class="navbar-text">
+                Hola, <strong th:text="${user.nombreCliente}"></strong>!
+            </span>
+        </div>
+    </div>
+</nav>
+
+<div class="container mt-4">
     <h2>Cliente Dashboard</h2>
-    <p th:text="'Hola, ' + ${user.nombreCliente} + '!'"></p>
-    <a th:href="@{/peliculas}" class="btn btn-primary">Ver Películas</a>
-    <a th:href="@{/logout}" class="btn btn-secondary">Logout</a>
+    
+    <div class="row">
+        <!-- Iterar sobre las películas y mostrar cada una como una card -->
+        <div th:each="pelicula : ${peliculas}" class="col-md-4 mb-4">
+            <div class="card">
+                <img th:src="@{'/foto_peliculas/' + ${pelicula.urlImagenPelicula}}" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title" th:text="${pelicula.tituloPelicula}"></h5>
+                    <!-- Agregar más detalles de la película si es necesario -->
+                    <!-- Por ejemplo: <p class="card-text" th:text="${pelicula.descripcion}"></p> -->
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<!-- Agrega otros scripts JS si es necesario -->
 </body>
 </html>

@@ -1,18 +1,25 @@
 package com.example.demo.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import com.example.demo.entity.PeliculaEntity;
 import com.example.demo.repository.ClienteRepository;
 import com.example.demo.repository.EmpleadoRepository;
 import com.example.demo.repository.PeliculaRepository;
+import com.example.demo.service.PeliculaService;
 
 import jakarta.servlet.http.HttpSession;
 
 @Controller
 public class HomeController {
+	
+	@Autowired
+	private PeliculaService peliculaService;
 	
 	@Autowired
 	private ClienteRepository clienteRepository;
@@ -50,12 +57,14 @@ public class HomeController {
 	    return "admin";
 	}
 	
-	@GetMapping("/cliente")
-    public String cliente(HttpSession session, Model model) {
-        if (!"CLIENTE".equals(session.getAttribute("role"))) {
-            return "redirect:/login";
-        }
-        model.addAttribute("user", session.getAttribute("user"));
-        return "cliente";
-    }
+	 @GetMapping("/cliente")
+	    public String cliente(HttpSession session, Model model) {
+	        if (!"CLIENTE".equals(session.getAttribute("role"))) {
+	            return "redirect:/login";
+	        }
+	        model.addAttribute("user", session.getAttribute("user"));
+	        List<PeliculaEntity> peliculas = peliculaService.listarPeliculas(); // Obtener todas las películas desde el servicio
+	        model.addAttribute("peliculas", peliculas);
+	        return "cliente";
+	    }
 }
