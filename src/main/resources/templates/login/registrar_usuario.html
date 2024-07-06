@@ -57,7 +57,7 @@
 <body>
 <div class="registro-container">
     <h2>Registrar Usuario</h2>
-    <form th:action="@{/registrar_cliente}" method="post" th:object="${cliente}" id="registrarClienteForm" novalidate>
+    <form th:action="@{/registrar_usuario}" method="post" th:object="${cliente}" id="registrarClienteForm" novalidate>
         <div class="form-group">
             <label for="nombreCliente">Nombre</label>
             <input type="text" id="nombreCliente" name="nombreCliente" class="form-control" th:field="*{nombreCliente}" placeholder="Ingrese su nombre" required>
