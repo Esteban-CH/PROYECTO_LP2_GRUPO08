@@ -16,4 +16,5 @@ public interface ClienteService {
 
     void eliminarCliente(Integer id);
 	
+    boolean existsByEmail(String email);
 }

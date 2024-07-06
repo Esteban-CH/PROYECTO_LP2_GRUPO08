@@ -6,14 +6,72 @@
     <title>Editar Cliente</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/sidebar.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f4f9;
+        }
+        .container-fluid {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .content {
+            width: 400px;
+        }
+        .card {
+            border: none;
+            border-radius: 15px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .card-header {
+            background-color: #343a40;
+            color: white;
+            font-weight: bold;
+            border-radius: 15px 15px 0 0;
+            padding: 15px 20px;
+        }
+        .card-body {
+            padding: 20px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .btn {
+            font-size: 14px;
+            border-radius: 5px;
+            padding: 8px 16px;
+            margin-right: 5px;
+        }
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
+        }
+        .btn-secondary {
+            background-color: #6c757d;
+            border-color: #6c757d;
+        }
+        .btn-secondary:hover {
+            background-color: #5a6268;
+            border-color: #545b62;
+        }
+    </style>
 </head>
 <body>
+<div th:replace="fragmentos/sidebar :: sidebar"></div>
 <div class="container-fluid">
-    <div class="row">
-        <div th:replace="fragmentos/sidebar :: sidebar"></div>
-        <div class="content col">
-            <div class="container mt-4">
-                <h2 class="mb-4">Editar Cliente</h2>
+    <div class="content">
+        <div class="card">
+            <div class="card-header">
+                <h2 class="text-center mb-0">Editar Cliente</h2>
+            </div>
+            <div class="card-body">
                 <form th:action="@{/editar_cliente/{id}(id=${cliente.clienteId})}" th:object="${cliente}" method="post">
                     <div class="form-group">
                         <label for="nombreCliente">Nombre</label>
@@ -35,13 +93,16 @@
                         <label for="passwordCliente">Password</label>
                         <input type="password" class="form-control" id="passwordCliente" th:field="*{passwordCliente}" required>
                     </div>
-                    <button type="submit" class="btn btn-primary">Actualizar</button>
-                    <a th:href="@{/listar_cliente}" class="btn btn-secondary">Cancelar</a>
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-primary">Actualizar</button>
+                        <a th:href="@{/listar_cliente}" class="btn btn-secondary">Cancelar</a>
+                    </div>
                 </form>
             </div>
         </div>
     </div>
 </div>
+
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

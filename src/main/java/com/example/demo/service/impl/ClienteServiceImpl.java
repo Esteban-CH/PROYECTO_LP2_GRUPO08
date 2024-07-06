@@ -54,5 +54,10 @@ public class ClienteServiceImpl implements ClienteService{
 	public void eliminarCliente(Integer id) {
 		clienteRepository.deleteById(id);
 	}
+	
+	@Override
+    public boolean existsByEmail(String email) {
+        return clienteRepository.existsByEmailCliente(email);
+    }
 
 }

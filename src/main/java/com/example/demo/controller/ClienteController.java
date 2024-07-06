@@ -1,15 +1,21 @@
 package com.example.demo.controller;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.demo.entity.ClienteEntity;
 import com.example.demo.repository.ClienteRepository;
@@ -32,7 +38,7 @@ public class ClienteController {
 		return "/clientes/listar";
     }
 	
-	@GetMapping("/registar_cliente")
+	@GetMapping("/registrar_cliente")
     public String mostrarFormularioNuevoCliente(Model model) {
         model.addAttribute("cliente", new ClienteEntity());
         return "/clientes/registrar";
@@ -85,4 +91,19 @@ public class ClienteController {
 		clienteService.eliminarCliente(id);
 		return("redirect:/listar_cliente");
 	}
+	
+	@GetMapping("/verificar_correo")
+	public ResponseEntity<Map<String, Boolean>> verificarCorreo(@RequestParam String email) {
+	    boolean exists = clienteService.existsByEmail(email);
+	    Map<String, Boolean> response = new HashMap<>();
+	    response.put("exists", exists);
+	    return ResponseEntity.ok(response);
+	}
+	
+	@ExceptionHandler(DataIntegrityViolationException.class)
+    public String handleDataIntegrityViolationException(DataIntegrityViolationException ex) {
+        // Aquí puedes definir el mensaje que quieres devolver a la vista
+        return "El correo electrónico ya está en uso.";
+    }
+	
 }

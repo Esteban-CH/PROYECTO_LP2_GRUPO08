@@ -1,47 +1,76 @@
+/* General Sidebar Styles */
 .sidebar {
     position: fixed;
     top: 0;
     left: 0;
     height: 100%;
     width: 250px;
-    background-color: #343a40; /* Cambié el color a un tono más oscuro */
+    background-color: #343a40; /* Darker background color */
     padding-top: 20px;
-    border-right: 1px solid rgba(0, 0, 0, 0.1); /* Borde derecho para separación */
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Sombra sutil */
-    z-index: 1000; /* Asegura que esté encima del contenido */
+    border-right: 1px solid rgba(0, 0, 0, 0.1); /* Right border for separation */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+    z-index: 1000; /* Ensure it is above the content */
+    transition: all 0.3s ease;
 }
 
 .content {
     margin-left: 250px;
     padding: 20px;
+    transition: margin-left 0.3s ease;
 }
 
+/* Text and Link Styles */
 .sidebar {
-    /* ... */
-    color: #f8f9fa; /* Color de texto claro */
+    color: #f8f9fa; /* Light text color */
     font-size: 16px;
     text-align: left;
 }
 
 .sidebar .nav-link {
-    color: rgba(255, 255, 255, 0.75); /* Color de enlaces con opacidad */
+    color: rgba(255, 255, 255, 0.75); /* Links with opacity */
     padding: 10px 20px;
     text-decoration: none;
     display: block;
-}
-
-.sidebar .nav-link:hover {
-    background-color: rgba(255, 255, 255, 0.1); /* Cambia el fondo al pasar el ratón */
-}
-
-.sidebar .nav-link.active {
-    background-color: rgba(255, 255, 255, 0.1); /* Fondo activo */
-    color: #ffffff; /* Texto activo */
-    font-weight: bold;
-}
-
-.sidebar .nav-link {
-    /* ... */
     transition: all 0.3s ease;
 }
 
+.sidebar .nav-link:hover {
+    background-color: rgba(255, 255, 255, 0.1); /* Change background on hover */
+}
+
+.sidebar .nav-link.active {
+    background-color: rgba(255, 255, 255, 0.1); /* Active background */
+    color: #ffffff; /* Active text color */
+    font-weight: bold;
+}
+
+/* Additional Styling for Logo and Headers */
+.sidebar .text-center img {
+    width: 80px;
+    margin-bottom: 10px;
+}
+
+.sidebar h4 {
+    color: #f8f9fa;
+    font-size: 18px;
+    margin-top: 10px;
+}
+
+/* Transition for Sidebar Collapse */
+@media (max-width: 768px) {
+    .sidebar {
+        width: 0;
+        overflow: hidden;
+    }
+
+    .content {
+        margin-left: 0;
+    }
+}
+
+/* Styling for the Logout Link at the Bottom */
+.nav-item.mt-auto .nav-link {
+    position: absolute;
+    bottom: 20px;
+    width: 100%;
+}
