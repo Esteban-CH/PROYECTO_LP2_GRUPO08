@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registrar Cliente</title>
-    <!-- Bootstrap CSS -->
+    <title>Editar Cliente</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/css/sidebar.css">
     <style>
@@ -84,10 +83,10 @@
     <div class="content">
         <div class="card">
             <div class="card-header">
-                <h2 class="text-center mb-0">Registrar Cliente</h2>
+                <h2 class="text-center mb-0">Editar Cliente</h2>
             </div>
             <div class="card-body">
-                <form th:action="@{/registrar_cliente}" th:object="${cliente}" method="post" id="registroForm" novalidate>
+                <form th:action="@{/editar_cliente/{id}(id=${cliente.clienteId})}" th:object="${cliente}" method="post" id="editarClienteForm" novalidate>
                     <div class="form-group row">
                         <label for="nombreCliente" class="col-sm-4 col-form-label">Nombre</label>
                         <div class="col-sm-8">
@@ -130,7 +129,7 @@
                         </div>
                     </div>
                     <div class="text-center">
-                        <button type="submit" class="btn btn-primary">Guardar</button>
+                        <button type="submit" class="btn btn-primary">Actualizar</button>
                         <a th:href="@{/listar_cliente}" class="btn btn-secondary">Cancelar</a>
                     </div>
                 </form>
@@ -139,7 +138,6 @@
     </div>
 </div>
 
-<!-- Bootstrap JS y dependencias opcionales -->
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
@@ -147,9 +145,8 @@
 <script>
     feather.replace();
 
-    // Función para validar campos vacíos y mostrar mensajes de error
     function validarCampos() {
-        var form = document.getElementById('registroForm');
+        var form = document.getElementById('editarClienteForm');
         var valid = true;
 
         form.querySelectorAll('input[required]').forEach(function(input) {
@@ -171,14 +168,36 @@
         return valid;
     }
 
-    // Evento para validar campos antes de enviar el formulario
-    document.getElementById('registroForm').addEventListener('submit', function(event) {
-        if (!validarCampos()) {
-            event.preventDefault(); // Evitar envío si hay campos no válidos
+    function validarEmailExistente(email) {
+        return fetch('/validar_email?email=' + encodeURIComponent(email))
+            .then(response => response.json())
+            .then(data => {
+                if (data.existe) {
+                    document.getElementById('emailCliente').classList.add('is-invalid');
+                    document.getElementById('emailHelp').innerText = 'El correo ya está registrado.';
+                    return false;
+                } else {
+                    document.getElementById('emailCliente').classList.remove('is-invalid');
+                    document.getElementById('emailHelp').innerText = '';
+                    return true;
+                }
+            });
+    }
+
+    document.getElementById('editarClienteForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+        var form = event.target;
+
+        if (validarCampos()) {
+            var email = document.getElementById('emailCliente').value;
+            validarEmailExistente(email).then(emailValido => {
+                if (emailValido) {
+                    form.submit();
+                }
+            });
         }
     });
 
-    // Evento para mostrar mensajes al enfocar los campos
     document.querySelectorAll('input[required]').forEach(function(input) {
         input.addEventListener('focus', function() {
             var feedback = this.nextElementSibling;
