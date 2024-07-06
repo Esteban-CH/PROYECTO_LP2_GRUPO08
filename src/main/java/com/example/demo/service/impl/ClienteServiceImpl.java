@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.example.demo.entity.ClienteEntity;
 import com.example.demo.repository.ClienteRepository;
 import com.example.demo.service.ClienteService;
+import com.example.demo.utils.Utilitarios;
 
 
 @Service
@@ -20,7 +21,9 @@ public class ClienteServiceImpl implements ClienteService{
 	@Override
 	public ClienteEntity insertarCliente(ClienteEntity cliente) {
 		cliente.setFchaCreacionCliente(new Date());
-		cliente.setFchaActualizacionCliente(new Date()); 
+		cliente.setFchaActualizacionCliente(new Date());
+		String passwordHash = Utilitarios.extraerHash(cliente.getPasswordCliente());
+		cliente.setPasswordCliente(passwordHash);
 		return clienteRepository.save(cliente);
 	}
 

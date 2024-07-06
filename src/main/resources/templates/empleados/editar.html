@@ -5,48 +5,95 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Editar Empleado</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/css/sidebar.css"> <!-- Agregar el CSS específico del sidebar -->
+    <link rel="stylesheet" href="/css/sidebar.css"> <!-- Estilo específico del sidebar -->
+
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f4f9;
+        }
+        .container-fluid {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .content {
+            width: 80%; /* Ancho del formulario ajustado */
+            max-width: 600px; /* Ancho máximo del formulario */
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .btn {
+            font-size: 14px;
+            border-radius: 5px;
+            padding: 8px 16px;
+            margin-right: 5px;
+        }
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
+        }
+        .btn-secondary {
+            background-color: #6c757d;
+            border-color: #6c757d;
+        }
+        .btn-secondary:hover {
+            background-color: #5a6268;
+            border-color: #545b62;
+        }
+    </style>
 </head>
 <body>
+<div th:replace="fragmentos/sidebar :: sidebar"></div>
 <div class="container-fluid">
-    <div class="row">
-        <div th:replace="fragmentos/sidebar :: sidebar"></div>
-        <div class="content col">
-            <div class="container mt-4">
-                <h2>Editar Empleado</h2>
+    <div class="content">
+        <div class="card">
+            <div class="card-header">
+                <h2 class="text-center mb-0">Editar Empleado</h2>
             </div>
-            <form th:action="@{/editar_empleado/{id}(id=${empleado.empleadoId})}" th:object="${empleado}" method="post">
-                <div class="form-group">
-                    <label for="nombreEmpleado">Nombre</label>
-                    <input type="text" class="form-control" id="nombreEmpleado" th:field="*{nombreEmpleado}" required>
-                </div>
-                <div class="form-group">
-                    <label for="apellidoEmpleado">Apellido</label>
-                    <input type="text" class="form-control" id="apellidoEmpleado" th:field="*{apellidoEmpleado}" required>
-                </div>
-                <div class="form-group">
-                    <label for="emailEmpleado">Email</label>
-                    <input type="email" class="form-control" id="emailEmpleado" th:field="*{emailEmpleado}" required>
-                </div>
-                <div class="form-group">
-                    <label for="telefonoEmpleado">Teléfono</label>
-                    <input type="text" class="form-control" id="telefonoEmpleado" th:field="*{telefonoEmpleado}" required>
-                </div>
-                <div class="form-group">
-                    <label for="passwordEmpleado">Password</label>
-                    <input type="text" class="form-control" id="passwordEmpleado" th:field="*{passwordEmpleado}">
-                </div>
-                <button type="submit" class="btn btn-primary">Actualizar</button>
-                <a th:href="@{/listar_empleado}" class="btn btn-secondary">Cancelar</a>
-            </form>
+            <div class="card-body">
+                <form th:action="@{/editar_empleado/{id}(id=${empleado.empleadoId})}" th:object="${empleado}" method="post">
+                    <div class="form-group">
+                        <label for="nombreEmpleado">Nombre</label>
+                        <input type="text" class="form-control" id="nombreEmpleado" th:field="*{nombreEmpleado}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="apellidoEmpleado">Apellido</label>
+                        <input type="text" class="form-control" id="apellidoEmpleado" th:field="*{apellidoEmpleado}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="emailEmpleado">Email</label>
+                        <input type="email" class="form-control" id="emailEmpleado" th:field="*{emailEmpleado}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="telefonoEmpleado">Teléfono</label>
+                        <input type="text" class="form-control" id="telefonoEmpleado" th:field="*{telefonoEmpleado}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="passwordEmpleado">Contraseña</label>
+                        <input type="text" class="form-control" id="passwordEmpleado" th:field="*{passwordEmpleado}">
+                    </div>
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-primary">Actualizar</button>
+                        <a th:href="@{/listar_empleado}" class="btn btn-secondary">Cancelar</a>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 </div>
+
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script src="https://unpkg.com/feather-icons"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css"></script>
 </body>
 </html>
-

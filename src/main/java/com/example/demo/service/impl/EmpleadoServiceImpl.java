@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.example.demo.entity.EmpleadoEntity;
 import com.example.demo.repository.EmpleadoRepository;
 import com.example.demo.service.EmpleadoService;
+import com.example.demo.utils.Utilitarios;
 
 @Service
 public class EmpleadoServiceImpl implements EmpleadoService{
@@ -20,6 +21,8 @@ public class EmpleadoServiceImpl implements EmpleadoService{
 	public EmpleadoEntity insertarEmpleado(EmpleadoEntity empleado) {
 		empleado.setFchaCreacionEmpleado(new Date());
 		empleado.setFchaActualizacionEmpleado(new Date());
+		String passwordHash = Utilitarios.extraerHash(empleado.getPasswordEmpleado());
+		empleado.setPasswordEmpleado(passwordHash);	
 		return empleadoRepository.save(empleado);
 	}
 
@@ -44,6 +47,8 @@ public class EmpleadoServiceImpl implements EmpleadoService{
 			empleadoBuscarId.setTelefonoEmpleado(empleado.getTelefonoEmpleado());
 			empleadoBuscarId.setFchaActualizacionEmpleado(new Date());
 			empleado.setFchaCreacionEmpleado(empleado.getFchaCreacionEmpleado());
+			String passwordHash = Utilitarios.extraerHash(empleado.getPasswordEmpleado());
+			empleado.setPasswordEmpleado(passwordHash);	
 			return empleadoRepository.save(empleadoBuscarId);
 		}
 		return null;
